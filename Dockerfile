@@ -3,7 +3,7 @@ FROM ubuntu:16.04
 MAINTAINER Matteo Capitanio <matteo.capitanio@gmail.it>
 
 ENV IMPALA_KUDU_VER 2.7.0+cdh5.9.0
-ENV KUDU_VER 1.1.0+cdh5.4.0
+ENV KUDU_VER 1.0.0+cdh5.4.0
 
 ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk-amd64/
 
