@@ -37,4 +37,4 @@ Once started you'll be able to access to the following UIs:
 
 ### Available tags:
 
-- Impala 2.7.0 & Kudu 1.1.0 ([2.7.0+cdh5.9.0](https://github.com/mcapitanio/docker-impala-kudu/blob/2.7.0+cdh5.9.0/Dockerfile), [latest](https://github.com/mcapitanio/docker-impala-kudu/blob/latest/Dockerfile))
+- Impala 2.7.0 & Kudu 1.1.0 ([2.7.0-cdh5.9.0](https://github.com/mcapitanio/docker-impala-kudu/blob/2.7.0-cdh5.9.0/Dockerfile), [latest](https://github.com/mcapitanio/docker-impala-kudu/blob/latest/Dockerfile))
