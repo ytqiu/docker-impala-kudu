@@ -22,7 +22,7 @@ RUN yum install -y impala-kudu impala-kudu-server impala-kudu-shell impala-kudu-
 RUN yum install -y gcc python-devel cyrus-sasl*
 RUN yum clean all
 
-ADD etc/supervisord.conf /etc/
+ADD etc/default/supervisord.conf /etc/
 ADD etc/default/impala /etc/default/
 ADD etc/default/conf/hdfs-site.xml /etc/impala/conf/
 ADD etc/default/conf/core-site.xml /etc/impala/conf/
