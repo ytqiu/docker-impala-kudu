@@ -1,21 +1,201 @@
-version: '3'
+version: '2'
 services:
-  impala:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: parrotstream/impala-kudu:latest
+#  postgres:
+#    image: postgres
+#    networks:
+#    - parrot
+#    ports:
+#    - 5432:5432
+#    environment:
+#      POSTGRES_PASSWORD: postgres
+
+
+  impala_w0:
+    #build:
+    #  context: .
+    #  dockerfile: Dockerfile
+    #image: parrotstream/impala-kudu:latest
+    image: ytqiu/impala-kudu
+    volumes:
+    - ./etc/supervisord.conf:/etc/supervisord.conf
+    - ./etc/impala/conf:/etc/impala/conf
     networks:
     - parrot
+    #ports:
+    #- 21000:21000
+    #- 21050:21050
+    environment:
+      IMPALA_MODE: worker
+      IMPALA_CATALOG_SERVICE_HOST: impala-co
+      IMPALA_STATE_STORE_HOST: impala-co
+  impala_c:
+    #build:
+    #  context: .
+    #  dockerfile: Dockerfile
+    #image: parrotstream/impala-kudu:latest
+    image: ytqiu/impala-kudu
+    volumes:
+    - ./etc/supervisord.conf:/etc/supervisord.conf
+    - ./etc/impala/conf:/etc/impala/conf
+    networks:
+      parrot:
+        aliases:
+        - impala-co
     ports:
     - 21000:21000
     - 21050:21050
     - 25000:25000
     - 25010:25010
     - 25020:25020
+    environment:
+      IMPALA_MODE: coordinator
+#  impala:
+#    #build:
+#    #  context: .
+#    #  dockerfile: Dockerfile
+#    #image: parrotstream/impala-kudu:latest
+#    image: ytqiu/impala-kudu
+#    volumes:
+#    - ./etc/supervisord.conf:/etc/supervisord.conf
+#    - ./etc/impala/conf:/etc/impala/conf
+#    networks:
+#    - parrot
+#    ports:
+#    - 21000:21000
+#    - 21050:21050
+#    - 25000:25000
+#    - 25010:25010
+#    - 25020:25020
+#    environment:
+#      mode: worker
+
+#  zookeeper:
+#    image: zookeeper
+#    networks:
+#    - parrot
+#  hadoop:
+#        #build:
+#        #    context: .
+#        #    dockerfile: Dockerfile
+#        image: parrotstream/hadoop:latest
+#        links:
+#            - zookeeper
+#        networks:
+#            - parrot
+#        volumes:
+#            - hadoop_conf:/opt/hadoop/etc/hadoop
+#            - hadoop_logs:/opt/hadoop/logs
+#            - hadoop_hdfs:/hdfs
+#        ports:
+#            - "50070:50070"
+#            - "50075:50075"
+#            - "8020:8020"
+#            - "8042:8042"
+#            - "8088:8088"
+#            - "8188:8188"
+#            - "19888:19888"
+#
+#  kudu-master-data:
+#    #image: kunickiaj/kudu
+#    image: ytqiu/kudu
+#    volumes:
+#      - /var/lib/kudu/master
+##  kudu-tserver-data1:
+##    #image: kunickiaj/kudu
+##    image: ytqiu/kudu
+##    volumes:
+##      - /var/lib/kudu/tserver
+##  kudu-tserver-data2:
+##    #image: kunickiaj/kudu
+##    image: ytqiu/kudu
+##    volumes:
+##      - /var/lib/kudu/tserver
+##  kudu-tserver-data3:
+##    #image: kunickiaj/kudu
+##    image: ytqiu/kudu
+##    volumes:
+##      - /var/lib/kudu/tserver
+#  kudu-master:
+#    #image: kunickiaj/kudu
+#    image: ytqiu/kudu
+#    networks:
+#      - parrot
+#    ports:
+#      - 8051:8051
+#      - 7051:7051
+#    volumes_from:
+#      - kudu-master-data
+#    command: master
+#    environment:
+#      KUDU_OPTS: "-default_num_replicas=3 -rpc_authentication=disabled"
+#    #hostname: boot2docker
+#
+#  kudu-tserver1:
+#    #image: kunickiaj/kudu
+#    image: ytqiu/kudu
+#    environment:
+#      - KUDU_MASTER=kudu-master
+#      #- KUDU_OPTS="-webserver_port=8060"
+#    #ports:
+#    #  - 8060:8060
+#    #  - 7050-7050
+#    #volumes_from:
+#    #  - kudu-tserver-data1
+#    volumes:
+#    - /var/lib/kudu/tserver/1:/var/lib/kudu/tserver
+#    command: tserver
+#    links:
+#      - kudu-master
+#    #hostname: boot2docker
+#    networks:
+#      - parrot
+#  kudu-tserver2:
+#    #image: kunickiaj/kudu
+#    image: ytqiu/kudu
+#    environment:
+#      - KUDU_MASTER=kudu-master
+#      #- KUDU_OPTS="-webserver_port=8060"
+#    #ports:
+#    #  - 8061:8060
+#    #  - 7050-7050
+#    #volumes_from:
+#    #  - kudu-tserver-data1
+#    volumes:
+#    - /var/lib/kudu/tserver/2:/var/lib/kudu/tserver
+#    command: tserver
+#    links:
+#      - kudu-master
+#    #hostname: boot2docker
+#    networks:
+#      - parrot
+#  kudu-tserver3:
+#    #image: kunickiaj/kudu
+#    image: ytqiu/kudu
+#    environment:
+#      - KUDU_MASTER=kudu-master
+#      #- KUDU_OPTS="-webserver_port=8060"
+#    #ports:
+#    #  - 8062:8060
+#    #  - 7050-7050
+#    #volumes_from:
+#    #  - kudu-tserver-data1
+#    volumes:
+#    - /var/lib/kudu/tserver/3:/var/lib/kudu/tserver
+#    command: tserver
+#    links:
+#      - kudu-master
+#    #hostname: boot2docker
+#    networks:
+#      - parrot
+#
+#volumes:
+#    hadoop_conf:
+#    hadoop_hdfs:
+#    hadoop_logs:
 networks:
-  default:
+#  default:
+  parrot:
     external:
       name: parrot
-  parrot:
-    driver: bridge
+#  parrot:
+#    driver: bridge
